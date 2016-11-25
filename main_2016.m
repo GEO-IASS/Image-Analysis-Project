@@ -1,12 +1,12 @@
+%% Created datastore object of dataset
 myfolder = './Dataset';
 imds = imageDatastore(myfolder, 'IncludeSubfolders',true,'LabelSource','foldernames');
-%% Display Class Names and Counts
-%% tbl = countEachLabel(imds)        
-%% categories = tbl.Label;
+tbl = countEachLabel(imds);
+%disp(tbl);
 %% Display Sampling of Image Data
-% sample = splitEachLabel(imds,4);
-% montage(sample.Files(1:4));
-% title(char(tbl.Label(1)));
+sample = splitEachLabel(imds,8);
+montage(sample.Files(1:20));
+title(char(tbl.Label(1)));
 
 %% Partition 700 images for training and 200 for testing
 [training_set, test_set] = prepareInputFiles(imds);
