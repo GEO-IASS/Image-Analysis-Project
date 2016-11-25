@@ -29,11 +29,12 @@ bar(featureVector);
 title('Visual Word Occurrences');
 xlabel('Visual Word Index');
 ylabel('Frequency');
-return;
 %% 
-SceneImageData = array2table(scenedata);
-sceneType = categorical(repelem({training_set.Description}', [training_set.Count], 1));
-SceneImageData.sceneType = sceneType;
+fruitsImageData = array2table(fruitsdata);
+replicated_elem = repelem({training_set.Description}', [training_set.Count], 1);
+fruitType = categorical(replicated_elem);
+fruitsImageData.fruitType = fruitType;
+return;
 %% Test out accuracy on test set!
 
 testSceneData = double(encode(bag, test_set));
