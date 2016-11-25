@@ -13,7 +13,8 @@
 % http://groups.csail.mit.edu/vision/SUN/
 
 %% Load image data
-dataset_root_folder_path = './Image-Dataset/';
+dataset_root_folder_path = './Dataset';
+dst = datastore(dataset_root_folder_path, 'IncludeSubfolders', true, 'Type', 'image');
 dataset_root_folder = dir(dataset_root_folder_path);
 subfolder_bool_array = [dataset_root_folder(:).isdir];
 folder_names = {dataset_root_folder(subfolder_bool_array).name};
@@ -23,11 +24,20 @@ folder_num = length(folder_names);
 
 for i = 1:folder_num
     disp(folder_names(i));
-    items = dir(strcat(dataset_root_folder_path,char(folder_names(i))));
+    path_till_here = strcat(dataset_root_folder_path,char(folder_names(i)));
+    items = dir(path_till_here);
     items = items(not([items.isdir]));
     items_count = length(items(not([items.isdir])));
     rand_matrix = randi(items_count, 5);
     items(rand_matrix(1));
+    %strcat(path_till_here, items.name)
+    dataset = {items.name};
+    N = 6;
+    path_till_here = strcat(path_till_here, '/');
+    dataset = strcat(path_till_here, dataset);
+    montage(dataset(1:6), 'Size', [2, 3]);
+%     
+%     title(char(folder_names(i)));
     %temp = {items.name};
     %n = numel(temp);
     %idx = randi(numel(temp));
@@ -39,12 +49,11 @@ end
 
 %D = dir(['./Image-Dataset/Mango/']);
 %Num = length(D(not([D.isdir])));
+
 return;
 %% Display Sampling of Image Data
 sample = splitEachLabel(imds,16);
 
-montage(sample.Files(1:16));
-title(char(tbl.Label(1)));
 
 %% Show sampling of all data
 for ii = 1:4
