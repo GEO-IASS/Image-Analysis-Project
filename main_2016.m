@@ -13,13 +13,12 @@ tbl = countEachLabel(imds);
 TRAINING_SET_SIZE = 8;
 TEST_SET_SIZE = 4;
 [training_set, test_set] = partition_data(imds, TRAINING_SET_SIZE, TEST_SET_SIZE);
-return;
-%% Create Visual Vocabulary 
+%% Extract features from training set images 
 tic
-bag = bagOfFeatures(training_set,...
-    'VocabularySize',250,'PointSelection','Detector');
-scenedata = double(encode(bag, training_set));
+    bag = bagOfFeatures(training_set, 'VocabularySize', 250, 'PointSelection', 'Detector');
+    scenedata = double(encode(bag, training_set));
 toc
+return; 
 %% Visualize Feature Vectors 
 %img = read(training_set(1), randi(training_set(1).Count));
 %featureVector = encode(bag, img);
