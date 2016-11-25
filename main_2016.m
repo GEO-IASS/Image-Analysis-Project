@@ -18,20 +18,18 @@ tic
     bag = bagOfFeatures(training_set, 'VocabularySize', 250, 'PointSelection', 'Detector');
     scenedata = double(encode(bag, training_set));
 toc
-return; 
+read()
 %% Visualize Feature Vectors 
-%img = read(training_set(1), randi(training_set(1).Count));
-%featureVector = encode(bag, img);
-
-%subplot(4,2,1); imshow(img);
-%subplot(4,2,2); 
-%bar(featureVector);title('Visual Word Occurrences');xlabel('Visual Word Index');ylabel('Frequency');
-
-%img = read(training_set(2), randi(training_set(2).Count));
-%featureVector = encode(bag, img);
-%subplot(4,2,3); imshow(img);
-%subplot(4,2,4); 
-%bar(featureVector);title('Visual Word Occurrences');xlabel('Visual Word Index');ylabel('Frequency');
+img = read(training_set(1), randi(training_set(1).Count));
+featureVector = encode(bag, img);
+subplot(4,2,1);
+imshow(img);
+subplot(4,2,2); 
+bar(featureVector);
+title('Visual Word Occurrences');
+xlabel('Visual Word Index');
+ylabel('Frequency');
+return;
 %% 
 SceneImageData = array2table(scenedata);
 sceneType = categorical(repelem({training_set.Description}', [training_set.Count], 1));
