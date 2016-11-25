@@ -16,35 +16,36 @@ TEST_SET_SIZE = 4;
 %% Extract features from training set images 
 tic
     bag = bagOfFeatures(training_set, 'VocabularySize', 250, 'PointSelection', 'Detector');
-    scenedata = double(encode(bag, training_set));
+    fruitsdata = double(encode(bag, training_set));
 toc
-read()
+disp(randi(training_set(1).Count));
+
 %% Visualize Feature Vectors 
-img = read(training_set(1), randi(training_set(1).Count));
-featureVector = encode(bag, img);
-subplot(4,2,1);
-imshow(img);
-subplot(4,2,2); 
-bar(featureVector);
-title('Visual Word Occurrences');
-xlabel('Visual Word Index');
-ylabel('Frequency');
+%img = read(training_set(1), randi(training_set(1).Count));
+%featureVector = encode(bag, img);
+%subplot(4,2,1);
+%imshow(img);
+%subplot(4,2,2); 
+%bar(featureVector);
+%title('Visual Word Occurrences');
+%xlabel('Visual Word Index');
+%ylabel('Frequency');
 %% 
 fruitsImageData = array2table(fruitsdata);
 replicated_elem = repelem({training_set.Description}', [training_set.Count], 1);
 fruitType = categorical(replicated_elem);
 fruitsImageData.fruitType = fruitType;
-return;
+
 %% Test out accuracy on test set!
 
-testSceneData = double(encode(bag, test_set));
-testSceneData = array2table(testSceneData,'VariableNames',trainedClassifier.RequiredVariables);
-actualSceneType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
+testFruitsData = double(encode(bag, test_set));
+testFruitsData = array2table(testFruitsData,'VariableNames',trainedClassifier.RequiredVariables);
+actualFruitType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
 
-predictedOutcome = trainedClassifier.predictFcn(testSceneData);
+predictedOutcome = trainedClassifier.predictFcn(testFruitsData);
 
-correctPredictions = (predictedOutcome == actualSceneType);
-validationAccuracy = sum(correctPredictions)/length(predictedOutcome) %#ok
+correctPredictions = (predictedOutcome == actualFruitType);
+validationAccuracy = sum(correctPredictions)/length(predictedOutcome);
 %% Visualize how the classifier works
 ii = randi(size(test_set,2));
 jj = randi(test_set(ii).Count);
@@ -54,7 +55,7 @@ imshow(img)
 % Add code here to invoke the trained classifier
 imagefeatures = double(encode(bag, img));
 % Find two closest matches for each feature
-[bestGuess, score] = predict(trainedClassifier.ClassificationSVM,imagefeatures);
+[bestGuess, score] = predict(trainedClassifier.ClassificationTree,imagefeatures);
 % Display the string label for img
 if strcmp(char(bestGuess),test_set(ii).Description)
 	titleColor = [0 0.8 0];
@@ -64,5 +65,3 @@ end
 title(sprintf('Best Guess: %s; Actual: %s',...
 	char(bestGuess),test_set(ii).Description),...
 	'color',titleColor)
-
-return;
