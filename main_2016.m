@@ -2,14 +2,15 @@
 myfolder = './Dataset';
 imds = imageDatastore(myfolder, 'IncludeSubfolders',true,'LabelSource','foldernames');
 tbl = countEachLabel(imds);
-%disp(tbl);
-%% Display Sampling of Image Data
-sample = splitEachLabel(imds,8);
-montage(sample.Files(1:20));
-title(char(tbl.Label(1)));
+%% To Display Montage of few data
+%sample = splitEachLabel(imds,8);
+%montage(sample.Files(1:20));
+%title(char(tbl.Label(1)));
 
-%% Partition 700 images for training and 200 for testing
-[training_set, test_set] = prepareInputFiles(imds);
+%% Partition data set into 2 parts
+%% Training set and test set
+
+[training_set, test_set] = partition_data(imds, 8, 4);
 return;
 %% Create Visual Vocabulary 
 tic
