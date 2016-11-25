@@ -1,9 +1,7 @@
-%% Path of Dataset, imagedatastore object created for dataset
 myfolder = './Dataset';
 imds = imageDatastore(myfolder, 'IncludeSubfolders',true,'LabelSource','foldernames');
-
 %% Display Class Names and Counts
-%% tbl = countEachLabel(imds)                                             %#ok
+%% tbl = countEachLabel(imds)        
 %% categories = tbl.Label;
 %% Display Sampling of Image Data
 % sample = splitEachLabel(imds,4);
@@ -12,7 +10,7 @@ imds = imageDatastore(myfolder, 'IncludeSubfolders',true,'LabelSource','folderna
 
 %% Partition 700 images for training and 200 for testing
 [training_set, test_set] = prepareInputFiles(imds);
-
+return;
 %% Create Visual Vocabulary 
 tic
 bag = bagOfFeatures(training_set,...
