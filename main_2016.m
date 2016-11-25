@@ -35,7 +35,7 @@ fruitsImageData = array2table(fruitsdata);
 replicated_elem = repelem({training_set.Description}', [training_set.Count], 1);
 fruitType = categorical(replicated_elem);
 fruitsImageData.fruitType = fruitType;
-
+%% Before going forward , remember to choose best classifier from classification app then go ahead
 %% Test out accuracy on test set!
 
 testFruitsData = double(encode(bag, test_set));
