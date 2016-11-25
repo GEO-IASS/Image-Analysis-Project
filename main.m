@@ -13,7 +13,8 @@
 % http://groups.csail.mit.edu/vision/SUN/
 
 %% Load image data
-dataset_root_folder_path = './Image-Dataset/';
+dataset_root_folder_path = './Dataset';
+dst = datastore(dataset_root_folder_path, 'IncludeSubfolders', true, 'Type', 'image');
 dataset_root_folder = dir(dataset_root_folder_path);
 subfolder_bool_array = [dataset_root_folder(:).isdir];
 folder_names = {dataset_root_folder(subfolder_bool_array).name};
