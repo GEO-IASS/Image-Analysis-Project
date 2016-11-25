@@ -9,8 +9,10 @@ tbl = countEachLabel(imds);
 
 %% Partition data set into 2 parts
 %% Training set and test set
-
-[training_set, test_set] = partition_data(imds, 8, 4);
+% Macros for training set and test set
+TRAINING_SET_SIZE = 8;
+TEST_SET_SIZE = 4;
+[training_set, test_set] = partition_data(imds, TRAINING_SET_SIZE, TEST_SET_SIZE);
 return;
 %% Create Visual Vocabulary 
 tic
