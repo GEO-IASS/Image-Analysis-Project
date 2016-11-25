@@ -6,13 +6,6 @@
 % This example uses function from the Computer Vision System Toolbox and
 % Statistics and Machine Learning
 % Copyright (c) 2016, MathWorks, Inc.
-
-%% Description of the Data
-% The dataset contains 4 scenes: Field, Auditorium, Beach ,Restaurant
-% The images are photos of the scenes that have been taken from different
-% angles, positions, and different lighting conditions. These variations make 
-% this a challenging task.
-%%%
 %% 
 % Data needs to be downloaded in order for this demo to run
 % Please use your own data or download a database online
@@ -20,14 +13,27 @@
 % http://groups.csail.mit.edu/vision/SUN/
 
 %% Load image data
-% This assumes you have a directory: Scene_Categories
-% with each scene in a subdirectory
 dataset_root_folder_path = './Image-Dataset/';
 dataset_root_folder = dir(dataset_root_folder_path);
 subfolder_bool_array = [dataset_root_folder(:).isdir];
 folder_names = {dataset_root_folder(subfolder_bool_array).name};
 folder_names(ismember(folder_names,{'.','..'})) = [];
+folder_num = length(folder_names);
 %% Display Class Names and Counts
+
+for i = 1:folder_num
+    disp(folder_names(i));
+    items = dir(strcat(dataset_root_folder_path,char(folder_names(i))));
+    items = items(not([items.isdir]));
+    items_count = length(items(not([items.isdir])));
+    rand_matrix = randi(items_count, 5);
+    items(rand_matrix(1));
+    %temp = {items.name};
+    %n = numel(temp);
+    %idx = randi(numel(temp));
+    %file = temp{idx};
+    %temp(idx) = [];
+end
 %tbl = countEachLabel(imds)                                             %#ok
 %categories = tbl.Label;
 
