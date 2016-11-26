@@ -38,7 +38,7 @@ fruitsImageData.fruitType = fruitType;
 
 %% Test out accuracy on test set!
 
-[trainedClassifier, ~] = get_linear_classifier(fruitsImageData);
+[trainedClassifier, ~] = get_classifier(fruitsImageData);
 testFruitsData = double(encode(bag, test_set));
 testFruitsData = array2table(testFruitsData,'VariableNames',trainedClassifier.RequiredVariables);
 actualFruitType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
@@ -55,5 +55,5 @@ img = imread(user_input_file);
 imshow(img)
 imagefeatures = double(encode(bag, img));
 % Find two closest matches for each feature
-[bestGuess, score] = predict(trainedClassifier.ClassificationDiscriminant,imagefeatures);
+[bestGuess, score] = predict(trainedClassifier.ClassificationEnsemble,imagefeatures);
 title(sprintf('Best Guess: %s;',char(bestGuess)));
