@@ -35,34 +35,25 @@ fruitsImageData = array2table(fruitsdata);
 replicated_elem = repelem({training_set.Description}', [training_set.Count], 1);
 fruitType = categorical(replicated_elem);
 fruitsImageData.fruitType = fruitType;
-%% Before going forward , remember to choose best classifier from classification app then go ahead
+
 %% Test out accuracy on test set!
-[trainedClassifier, ~] = trainedClassifier(fruitsImageData);
+
+[trainedClassifier, ~] = get_classifier(fruitsImageData);
 testFruitsData = double(encode(bag, test_set));
 testFruitsData = array2table(testFruitsData,'VariableNames',trainedClassifier.RequiredVariables);
 actualFruitType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
-
 predictedOutcome = trainedClassifier.predictFcn(testFruitsData);
-
 correctPredictions = (predictedOutcome == actualFruitType);
 validationAccuracy = sum(correctPredictions)/length(predictedOutcome);
-%% Visualize how the classifier works
-warning('off', 'Images:initSize:adjustingMag');
-ii = randi(size(test_set,2));
-jj = randi(test_set(ii).Count);
-img = read(test_set(ii),jj);
 
+%% Get File From Our User and show classifier best Guess
+warning('off', 'Images:initSize:adjustingMag');
+user_input_file = imgetfile;
+% ii = randi(size(test_set,2));
+% jj = randi(test_set(ii).Count);
+img = imread(user_input_file);
 imshow(img)
-% Add code here to invoke the trained classifier
 imagefeatures = double(encode(bag, img));
 % Find two closest matches for each feature
 [bestGuess, score] = predict(trainedClassifier.ClassificationEnsemble,imagefeatures);
-% Display the string label for img
-if strcmp(char(bestGuess),test_set(ii).Description)
-	titleColor = [0 0.8 0];
-else
-	titleColor = 'r';
-end
-title(sprintf('Best Guess: %s; Actual: %s',...
-	char(bestGuess),test_set(ii).Description),...
-	'color',titleColor)
+title(sprintf('Best Guess: %s;',char(bestGuess)));
