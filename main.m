@@ -10,8 +10,8 @@ tbl = countEachLabel(imds);
 %% Partition data set into 2 parts
 %% Training set and test set
 % Macros for training set and test set
-TRAINING_SET_SIZE = 8;
-TEST_SET_SIZE = 4;
+TRAINING_SET_SIZE = 99;
+TEST_SET_SIZE = 1;
 [training_set, test_set] = partition_data(imds, TRAINING_SET_SIZE, TEST_SET_SIZE);
 %% Extract features from training set images 
 tic
@@ -38,7 +38,7 @@ fruitsImageData.fruitType = fruitType;
 
 %% Test out accuracy on test set!
 
-[trainedClassifier, ~] = get_classifier(fruitsImageData);
+[trainedClassifier, ~] = get_linear_classifier(fruitsImageData);
 testFruitsData = double(encode(bag, test_set));
 testFruitsData = array2table(testFruitsData,'VariableNames',trainedClassifier.RequiredVariables);
 actualFruitType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
@@ -55,5 +55,5 @@ img = imread(user_input_file);
 imshow(img)
 imagefeatures = double(encode(bag, img));
 % Find two closest matches for each feature
-[bestGuess, score] = predict(trainedClassifier.ClassificationEnsemble,imagefeatures);
+[bestGuess, score] = predict(trainedClassifier.ClassificationDiscriminant,imagefeatures);
 title(sprintf('Best Guess: %s;',char(bestGuess)));
