@@ -37,7 +37,7 @@ fruitType = categorical(replicated_elem);
 fruitsImageData.fruitType = fruitType;
 %% Before going forward , remember to choose best classifier from classification app then go ahead
 %% Test out accuracy on test set!
-
+[trainedClassifier, ~] = trainedClassifier(fruitsImageData);
 testFruitsData = double(encode(bag, test_set));
 testFruitsData = array2table(testFruitsData,'VariableNames',trainedClassifier.RequiredVariables);
 actualFruitType = categorical(repelem({test_set.Description}', [test_set.Count], 1));
@@ -55,7 +55,7 @@ imshow(img)
 % Add code here to invoke the trained classifier
 imagefeatures = double(encode(bag, img));
 % Find two closest matches for each feature
-[bestGuess, score] = predict(trainedClassifier.ClassificationTree,imagefeatures);
+[bestGuess, score] = predict(trainedClassifier.ClassificationEnsemble,imagefeatures);
 % Display the string label for img
 if strcmp(char(bestGuess),test_set(ii).Description)
 	titleColor = [0 0.8 0];
