@@ -47,6 +47,7 @@ predictedOutcome = trainedClassifier.predictFcn(testFruitsData);
 correctPredictions = (predictedOutcome == actualFruitType);
 validationAccuracy = sum(correctPredictions)/length(predictedOutcome);
 %% Visualize how the classifier works
+warning('off', 'Images:initSize:adjustingMag');
 ii = randi(size(test_set,2));
 jj = randi(test_set(ii).Count);
 img = read(test_set(ii),jj);
